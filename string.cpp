@@ -1,6 +1,7 @@
 #include "string.hpp"
+#include <iostream>
 
-string::string() : str{nullptr}
+string::string()
 {
     str = new char[1];
     str[0] = '\0';
@@ -15,8 +16,9 @@ string::string(char *val)
     }
     else
     {
-        str = new char[strlen(val)];
-        strcpy(val, str);
+        str = new char[std::strlen(val) + 1];
+        std::strcpy(str, val);
+        str[std::strlen(val)] = '\0';
     }
 }
 
@@ -25,61 +27,47 @@ string::~string()
     delete str;
 }
 
-static char *strcpy(const char *src, char *dest)
-{
-    int i;
-    for (i = 0; src[i] != 0; i++)
-    {
-        dest[i] = src[i];
-    }
-    dest[i] = 0;
-    return dest;
-}
-
-static int strlen(const char *str)
-{
-    int count = 0;
-    for (int i = 0; str[i] != '\0'; i++)
-    {
-        count++;
-    }
-    return ++count;
-}
-
 int string::length()
 {
-    return strlen(str);
+    return std::strlen(str);
 }
 
 string &string::operator=(const string &s)
 {
     if (this == &s)
+    {
         return *this;
+    }
     delete[] str;
-    str = new char[strlen(s.str)];
+    str = new char[std::strlen(s.str) + 1];
     strcpy(str, s.str);
     return *this;
 }
 
 string operator+(const string &s1, const string &s2)
 {
-    int length = strlen(s1.str) + strlen(s2.str);
+    int length = std::strlen(s1.str) + std::strlen(s2.str);
     char *buff = new char[length + 1];
-    strcpy(buff, s1.str);
-    strcat(buff, s2.str);
+    std::strcpy(buff, s1.str);
+    std::strcat(buff, s2.str);
     buff[length] = '\0';
-    string temp{buff};
+    string temp(buff);
     delete[] buff;
     return temp;
 }
 
-static char *strcat(char *dest, const char *src)
+std::istream &operator>>(std::istream &is, string &obj)
 {
-    char *end = dest + strlen(dest) - 1;
-    while (*src != '\0')
-    {
-        *end++ = *src++;
-    }
-    *end = '\0';
-    return dest;
+    char *buff = new char[1000];
+    memset(&buff[0], 0, sizeof(buff));
+    is >> buff;
+    obj = string(buff);
+    delete[] buff;
+    return is;
+}
+
+std::ostream &operator<<(std::ostream &os, const string &obj)
+{
+    os << obj.str;
+    return os;
 }
