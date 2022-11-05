@@ -14,33 +14,35 @@ public:
     ~string();
     int length();
     string &operator=(const string &s);
-    static char *scpy(const char *src, char *dest)
+    static char *scpy(char *dest, const char *src)
     {
-        int i;
-        for (i = 0; src[i] != 0; i++)
+        assert(dest != NULL && src != NULL);
+        char *temp = dest;
+        while ((*dest++ = *src++) != '\0')
         {
-            dest[i] = src[i];
         }
-        dest[i] = 0;
-        return dest;
+        return temp;
     }
-    static int slen(const char *str)
+    static unsigned int slen(const char *str)
     {
-        int count = 0;
-        for (int i = 0; str[i] != '\0'; i++)
+        unsigned int count = 0;
+        while (*str != '\0')
         {
             count++;
+            str++;
         }
         return count;
     }
     static char *scat(char *dest, const char *src)
     {
-        char *end = dest + slen(dest) - 1;
-        while (*src != '\0')
+        char *rdest = dest;
+        while (*dest)
         {
-            *end++ = *src++;
+            dest++;
         }
-        *end = '\0';
-        return dest;
+        while (*dest++ = *src++)
+        {
+        }
+        return rdest;
     }
 };
