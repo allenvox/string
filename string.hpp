@@ -6,6 +6,8 @@ class string
     friend std::ostream &operator<<(std::ostream &os, const string &obj);
     friend std::istream &operator>>(std::istream &is, string &obj);
     friend string operator+(const string &s1, const string &s2);
+
+private:
     char *str;
 
 public:
@@ -40,7 +42,7 @@ public:
         {
             dest++;
         }
-        while (*dest++ = *src++)
+        while ((*dest++ = *src++))
         {
         }
         return rdest;
