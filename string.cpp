@@ -16,7 +16,7 @@ string::string(char *val)
     }
     else
     {
-        str = new char[std::strlen(val) + 1];
+        str = new char[string::slen(val) + 1];
         string::scpy(str, val);
         str[string::slen(val)] = '\0';
     }
