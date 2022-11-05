@@ -12,9 +12,35 @@ public:
     string();
     string(char *val);
     ~string();
-    // static char *scpy(const char *src, char *dest);
-    // static int slen(const char *str);
     int length();
     string &operator=(const string &s);
-    // static char *scat(char *dest, const char *src);
+    static char *scpy(const char *src, char *dest)
+    {
+        int i;
+        for (i = 0; src[i] != 0; i++)
+        {
+            dest[i] = src[i];
+        }
+        dest[i] = 0;
+        return dest;
+    }
+    static int slen(const char *str)
+    {
+        int count = 0;
+        for (int i = 0; str[i] != '\0'; i++)
+        {
+            count++;
+        }
+        return count;
+    }
+    static char *scat(char *dest, const char *src)
+    {
+        char *end = dest + slen(dest) - 1;
+        while (*src != '\0')
+        {
+            *end++ = *src++;
+        }
+        *end = '\0';
+        return dest;
+    }
 };
