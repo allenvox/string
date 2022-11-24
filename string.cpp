@@ -1,15 +1,9 @@
 #include "string.hpp"
 #include <iostream>
 
-string::string()
-{
-    str = new char[1];
-    str[0] = '\0';
-}
-
 string::string(char *val)
 {
-    if (val == nullptr)
+    if (*val == 0 || val == nullptr)
     {
         str = new char[1];
         str[0] = '\0';
