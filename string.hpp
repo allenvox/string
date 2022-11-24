@@ -11,8 +11,7 @@ private:
     char *str;
 
 public:
-    string();
-    string(char *val);
+    string(char *val = "");
     ~string();
     int length();
     string &operator=(const string &s);
