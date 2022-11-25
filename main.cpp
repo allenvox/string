@@ -8,6 +8,7 @@ int main()
     string s2("world");
     std::cout << s2 << std::endl;
     string s3("!!!");
+    std::cout << s3 << std::endl;
     s3 = "...";
     std::cout << s3 << std::endl;
     std::cout << s1 + " " + s2 + s3 << std::endl;
