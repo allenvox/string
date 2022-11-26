@@ -1,19 +1,10 @@
 #pragma once
 #include <iostream>
 
-class string
+class chars
 {
-private:
-    char *str;
-    friend std::ostream &operator<<(std::ostream &os, const string &obj);
-    friend std::istream &operator>>(std::istream &is, string &obj);
-    friend string operator+(const string &s1, const string &s2);
 
 public:
-    string(char *val = "");
-    ~string();
-    int length();
-    string &operator=(const string &s);
     static char *scpy(char *dest, const char *src)
     {
         assert(dest != NULL && src != NULL);
@@ -45,4 +36,19 @@ public:
         }
         return rdest;
     }
+};
+
+class string : chars
+{
+private:
+    char *str;
+    friend std::ostream &operator<<(std::ostream &os, const string &obj);
+    friend std::istream &operator>>(std::istream &is, string &obj);
+    friend string operator+(const string &s1, const string &s2);
+
+public:
+    string(char *val = "");
+    ~string();
+    int length();
+    string &operator=(const string &s);
 };
