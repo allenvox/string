@@ -59,7 +59,7 @@ public:
     }
 };
 
-class string : operators
+class string
 {
 private:
     char *str;
@@ -72,17 +72,12 @@ public:
     string set(char *val);
     size_t length() const;
     ~string();
-    string &operator=(const string &s);
+    string &operator=(const string &s); // equation
 };
 
-class operators
-{
-private:
-    friend std::ostream &operator<<(std::ostream &os, const string &obj); // output
-    friend std::istream &operator>>(std::istream &is, string &obj);       // input
-    friend string operator+(const string &s1, const string &s2);          // concatenation
-    friend string operator+(const string &s1, const char &s2);
-    friend string operator+(const char &s1, const string &s2);
-    friend bool operator==(const string &s1, const string &s2); // equality
-    virtual string &operator=(const string &s);                 // equation (pure virtual)
-};
+std::ostream &operator<<(std::ostream &os, const string &obj); // output
+std::istream &operator>>(std::istream &is, string &obj);       // input
+string operator+(const string &s1, const string &s2);          // concatenation
+string operator+(const string &s1, const char &s2);
+string operator+(const char &s1, const string &s2);
+bool operator==(const string &s1, const string &s2); // equality
