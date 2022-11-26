@@ -10,9 +10,9 @@ string::string(char *val)
     }
     else
     {
-        str = new char[string::slen(val) + 1];
-        string::scpy(str, val);
-        str[string::slen(val)] = '\0';
+        str = new char[chars::slen(val) + 1];
+        chars::scpy(str, val);
+        str[chars::slen(val)] = '\0';
     }
 }
 
@@ -34,16 +34,16 @@ string &string::operator=(const string &s)
     }
     delete[] str;
     str = new char[std::strlen(s.str) + 1];
-    string::scpy(str, s.str);
+    chars::scpy(str, s.str);
     return *this;
 }
 
 string operator+(const string &s1, const string &s2)
 {
-    int length = string::slen(s1.str) + string::slen(s2.str);
+    int length = chars::slen(s1.str) + chars::slen(s2.str);
     char *buff = new char[length + 1];
-    string::scpy(buff, s1.str);
-    string::scat(buff, s2.str);
+    chars::scpy(buff, s1.str);
+    chars::scat(buff, s2.str);
     buff[length] = '\0';
     string temp(buff);
     delete[] buff;
