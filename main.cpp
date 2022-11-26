@@ -11,6 +11,7 @@ int main()
     std::cout << s3 << std::endl;
     s3 = "...";
     std::cout << s3 << std::endl;
+    std::cout << "(s1 == s2) = " << std::noboolalpha << (s1 == s2) << std::boolalpha << std::endl;
     std::cout << s1 + " " + s2 + s3 << std::endl;
     exit(0);
 }
