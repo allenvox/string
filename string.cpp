@@ -1,7 +1,8 @@
 #include "string.hpp"
 #include <iostream>
 
-string::string(char *val)
+// string
+string::string(const char *val)
 {
     if (*val == 0 || val == nullptr)
     {
@@ -16,14 +17,65 @@ string::string(char *val)
     }
 }
 
-string::~string()
+string::string(size_t size)
 {
-    delete str;
+    try
+    {
+        if (size <= 0)
+        {
+            throw "Size of a string must be more than zero.";
+        }
+        else
+        {
+            str = new char[size];
+            if (str != NULL)
+            {
+                for (size_t i = 0; i < size; i++)
+                {
+                    str[i] = '\0';
+                }
+            }
+        }
+    }
+    catch (const char *str)
+    {
+        std::cout << str << std::endl;
+    }
 }
 
-int string::length()
+string::string(const string &s)
 {
-    return string::slen(str);
+    str = new char[s.length()];
+    if (str != NULL)
+    {
+        chars::scpy(str, s.get());
+    }
+}
+
+char *string::get() const
+{
+    return str;
+}
+
+string string::set(char *val)
+{
+    delete[] str;
+    str = new char[chars::slen(val) + 1];
+    chars::scpy(str, val);
+    return *this;
+}
+
+size_t string::length() const
+{
+    return chars::slen(str);
+}
+
+string::~string()
+{
+    if (str != NULL)
+    {
+        delete[] str;
+    }
 }
 
 string &string::operator=(const string &s)
@@ -33,21 +85,14 @@ string &string::operator=(const string &s)
         return *this;
     }
     delete[] str;
-    str = new char[std::strlen(s.str) + 1];
-    chars::scpy(str, s.str);
+    str = new char[std::strlen(s.get()) + 1];
+    chars::scpy(str, s.get());
     return *this;
 }
 
-string operator+(const string &s1, const string &s2)
+std::ostream &operator<<(std::ostream &os, const string &obj)
 {
-    int length = chars::slen(s1.str) + chars::slen(s2.str);
-    char *buff = new char[length + 1];
-    chars::scpy(buff, s1.str);
-    chars::scat(buff, s2.str);
-    buff[length] = '\0';
-    string temp(buff);
-    delete[] buff;
-    return temp;
+    return (os << obj.get());
 }
 
 std::istream &operator>>(std::istream &is, string &obj)
@@ -60,8 +105,47 @@ std::istream &operator>>(std::istream &is, string &obj)
     return is;
 }
 
-std::ostream &operator<<(std::ostream &os, const string &obj)
+string operator+(const string &s1, const string &s2)
 {
-    os << obj.str;
-    return os;
+    int length = chars::slen(s1.get()) + chars::slen(s2.get());
+    char *buff = new char[length + 1];
+    chars::scpy(buff, s1.get());
+    chars::scat(buff, s2.get());
+    buff[length] = '\0';
+    string temp(buff);
+    delete[] buff;
+    return temp;
+}
+
+string operator+(const string &s1, const char *s2)
+{
+    int length = chars::slen(s1.get()) + chars::slen(s2);
+    char *buff = new char[length + 1];
+    chars::scpy(buff, s1.get());
+    chars::scat(buff, s2);
+    buff[length] = '\0';
+    string temp(buff);
+    delete[] buff;
+    return temp;
+}
+
+string operator+(const char *s1, const string &s2)
+{
+    int length = chars::slen(s1) + chars::slen(s2.get());
+    char *buff = new char[length + 1];
+    chars::scpy(buff, s1);
+    chars::scat(buff, s2.get());
+    buff[length] = '\0';
+    string temp(buff);
+    delete[] buff;
+    return temp;
+}
+
+bool operator==(const string &s1, const string &s2)
+{
+    if (chars::scmp(s1.get(), s2.get()) != 0)
+    {
+        return false;
+    }
+    return true;
 }
