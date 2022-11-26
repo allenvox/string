@@ -35,20 +35,44 @@ public:
         }
         return rdest;
     }
+    static int scmp(const char *s1, const char *s2)
+    {
+        char c1, c2;
+        while (1)
+        {
+            c1 = *s1++;
+            c2 = *s2++;
+            if (c1 > c2)
+            {
+                return 1;
+            }
+            else if (!c1)
+            {
+                break;
+            }
+            else
+            {
+                return -1;
+            }
+        }
+        return 0;
+    }
 };
 
-class string : chars, operators
+class string : operators
 {
 private:
     char *str;
 
 public:
-    string(char *val = "");
-    string(size_t size = 1);
-    char *get();
+    string(const char *val = ""); // init by value
+    string(size_t size = 1);      // init by size
+    string(const string &str);    // init by copy another string
+    char *get() const;
     string set(char *val);
+    size_t length() const;
     ~string();
-    int length();
+    string &operator=(const string &s);
 };
 
 class operators
@@ -57,5 +81,8 @@ private:
     friend std::ostream &operator<<(std::ostream &os, const string &obj); // output
     friend std::istream &operator>>(std::istream &is, string &obj);       // input
     friend string operator+(const string &s1, const string &s2);          // concatenation
-    string &operator=(const string &s);                                   // equation
+    friend string operator+(const string &s1, const char &s2);
+    friend string operator+(const char &s1, const string &s2);
+    friend bool operator==(const string &s1, const string &s2); // equality
+    virtual string &operator=(const string &s);                 // equation (pure virtual)
 };
