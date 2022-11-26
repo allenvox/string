@@ -3,7 +3,6 @@
 
 class chars
 {
-
 public:
     static char *scpy(char *dest, const char *src)
     {
@@ -38,17 +37,25 @@ public:
     }
 };
 
-class string : chars
+class string : chars, operators
 {
 private:
     char *str;
-    friend std::ostream &operator<<(std::ostream &os, const string &obj);
-    friend std::istream &operator>>(std::istream &is, string &obj);
-    friend string operator+(const string &s1, const string &s2);
 
 public:
     string(char *val = "");
+    string(size_t size = 1);
+    char *get();
+    string set(char *val);
     ~string();
     int length();
-    string &operator=(const string &s);
+};
+
+class operators
+{
+private:
+    friend std::ostream &operator<<(std::ostream &os, const string &obj); // output
+    friend std::istream &operator>>(std::istream &is, string &obj);       // input
+    friend string operator+(const string &s1, const string &s2);          // concatenation
+    string &operator=(const string &s);                                   // equation
 };
