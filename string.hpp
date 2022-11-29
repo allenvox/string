@@ -59,7 +59,7 @@ public:
     }
 };
 
-class string
+class string : public chars
 {
 private:
     char *str;

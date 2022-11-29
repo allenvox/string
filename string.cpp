@@ -11,9 +11,9 @@ string::string(const char *val)
     }
     else
     {
-        str = new char[chars::slen(val) + 1];
-        chars::scpy(str, val);
-        str[chars::slen(val)] = '\0';
+        str = new char[slen(val) + 1];
+        scpy(str, val);
+        str[slen(val)] = '\0';
     }
 }
 
@@ -48,7 +48,7 @@ string::string(const string &s)
     str = new char[s.length()];
     if (str != NULL)
     {
-        chars::scpy(str, s.get());
+        scpy(str, s.get());
     }
 }
 
@@ -60,14 +60,14 @@ char *string::get() const
 string string::set(char *val)
 {
     delete[] str;
-    str = new char[chars::slen(val) + 1];
-    chars::scpy(str, val);
+    str = new char[slen(val) + 1];
+    scpy(str, val);
     return *this;
 }
 
 size_t string::length() const
 {
-    return chars::slen(str);
+    return slen(str);
 }
 
 string::~string()
@@ -85,8 +85,8 @@ string &string::operator=(const string &s)
         return *this;
     }
     delete[] str;
-    str = new char[std::strlen(s.get()) + 1];
-    chars::scpy(str, s.get());
+    str = new char[slen(s.get()) + 1];
+    scpy(str, s.get());
     return *this;
 }
 
