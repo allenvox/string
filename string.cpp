@@ -52,24 +52,6 @@ string::string(const string &s)
     }
 }
 
-char *string::get() const
-{
-    return str;
-}
-
-string string::set(char *val)
-{
-    delete[] str;
-    str = new char[slen(val) + 1];
-    scpy(str, val);
-    return *this;
-}
-
-size_t string::length() const
-{
-    return slen(str);
-}
-
 string::~string()
 {
     if (str != NULL)

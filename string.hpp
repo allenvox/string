@@ -1,9 +1,34 @@
 #pragma once
 #include <iostream>
 
-class chars
+class abstract
+{
+protected:
+    char *str;
+
+public:
+    virtual char *get() const
+    {
+        return str;
+    }
+    virtual void set(char *val);
+    virtual size_t length() const;
+    virtual abstract &operator=(const abstract &s);
+};
+
+class chars : public abstract
 {
 public:
+    void set(char *val)
+    {
+        delete[] str;
+        str = new char[slen(val) + 1];
+        scpy(str, val);
+    }
+    size_t length() const
+    {
+        return slen(str);
+    }
     static char *scpy(char *dest, const char *src)
     {
         assert(dest != NULL && src != NULL);
@@ -61,16 +86,10 @@ public:
 
 class string : public chars
 {
-private:
-    char *str;
-
 public:
     string(const char *val = ""); // init by value
     string(size_t size = 1);      // init by size
     string(const string &str);    // init by copy another string
-    char *get() const;
-    string set(char *val);
-    size_t length() const;
     ~string();
     string &operator=(const string &s); // equation
 };
