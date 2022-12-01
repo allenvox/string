@@ -57,8 +57,42 @@ string &string::operator=(const string &s)
     {
         return *this;
     }
-    delete[] str;
-    str = new char[slen(s.get()) + 1];
-    scpy(str, s.get());
+    set(s.get());
     return *this;
+}
+
+std::ostream &operator<<(std::ostream &os, const string &obj)
+{
+    return (os << obj.get());
+}
+
+std::istream &operator>>(std::istream &is, string &obj)
+{
+    char *buff = new char[1000];
+    memset(&buff[0], 0, sizeof(buff));
+    is >> buff;
+    obj = string(buff);
+    delete[] buff;
+    return is;
+}
+
+string operator+(const string &s1, const string &s2)
+{
+    int length = chars::slen(s1.get()) + chars::slen(s2.get());
+    char *buff = new char[length + 1];
+    chars::scpy(buff, s1.get());
+    chars::scat(buff, s2.get());
+    buff[length] = '\0';
+    string temp(buff);
+    delete[] buff;
+    return temp;
+}
+
+bool operator==(const string &s1, const string &s2)
+{
+    if (chars::scmp(s1.get(), s2.get()) != 0)
+    {
+        return false;
+    }
+    return true;
 }
