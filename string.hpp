@@ -7,29 +7,18 @@ protected:
     char *str;
 
 public:
-    abstract()
-    {
-        str = new char[1];
-        str[0] = '\0';
-    }
-    ~abstract()
-    {
-        if (str != nullptr)
-        {
-            delete[] str;
-        }
-    }
-    char *get() const
-    {
-        return str;
-    }
-    virtual void set(char *val);
-    virtual size_t length() const;
+    virtual char *get() const = 0;
+    virtual void set(char *val) = 0;
+    virtual size_t length() const = 0;
 };
 
 class chars : public abstract
 {
 public:
+    char *get() const
+    {
+        return str;
+    }
     void set(char *val)
     {
         delete[] str;
@@ -111,62 +100,7 @@ public:
     string &operator=(const string &s);
 };
 
-std::ostream &operator<<(std::ostream &os, const string &obj)
-{
-    return (os << obj.get());
-}
-
-std::istream &operator>>(std::istream &is, string &obj)
-{
-    char *buff = new char[1000];
-    memset(&buff[0], 0, sizeof(buff));
-    is >> buff;
-    obj = string(buff);
-    delete[] buff;
-    return is;
-}
-
-string operator+(const string &s1, const string &s2)
-{
-    int length = chars::slen(s1.get()) + chars::slen(s2.get());
-    char *buff = new char[length + 1];
-    chars::scpy(buff, s1.get());
-    chars::scat(buff, s2.get());
-    buff[length] = '\0';
-    string temp(buff);
-    delete[] buff;
-    return temp;
-}
-
-string operator+(const string &s1, const char *s2)
-{
-    int length = chars::slen(s1.get()) + chars::slen(s2);
-    char *buff = new char[length + 1];
-    chars::scpy(buff, s1.get());
-    chars::scat(buff, s2);
-    buff[length] = '\0';
-    string temp(buff);
-    delete[] buff;
-    return temp;
-}
-
-string operator+(const char *s1, const string &s2)
-{
-    int length = chars::slen(s1) + chars::slen(s2.get());
-    char *buff = new char[length + 1];
-    chars::scpy(buff, s1);
-    chars::scat(buff, s2.get());
-    buff[length] = '\0';
-    string temp(buff);
-    delete[] buff;
-    return temp;
-}
-
-bool operator==(const string &s1, const string &s2)
-{
-    if (chars::scmp(s1.get(), s2.get()) != 0)
-    {
-        return false;
-    }
-    return true;
-}
+std::ostream &operator<<(std::ostream &os, const string &obj);
+std::istream &operator>>(std::istream &is, string &obj);
+string operator+(const string &s1, const string &s2);
+bool operator==(const string &s1, const string &s2);
