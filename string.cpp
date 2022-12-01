@@ -51,6 +51,24 @@ string::string(const string &s)
     }
 }
 
+string string::append(const char *val)
+{
+    int l = slen(str) + slen(val);
+    char *buff = new char[l + 1];
+    scpy(buff, str);
+    scat(buff, val);
+    buff[l] = '\0';
+    set(buff);
+    delete[] buff;
+    return *this;
+}
+
+string string::append(const string &s)
+{
+    append(s.get());
+    return *this;
+}
+
 string &string::operator=(const string &s)
 {
     if (this == &s)
@@ -78,13 +96,8 @@ std::istream &operator>>(std::istream &is, string &obj)
 
 string operator+(const string &s1, const string &s2)
 {
-    int length = chars::slen(s1.get()) + chars::slen(s2.get());
-    char *buff = new char[length + 1];
-    chars::scpy(buff, s1.get());
-    chars::scat(buff, s2.get());
-    buff[length] = '\0';
-    string temp(buff);
-    delete[] buff;
+    string temp(s1);
+    temp.append(s2);
     return temp;
 }
 
