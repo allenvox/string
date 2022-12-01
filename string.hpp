@@ -90,6 +90,8 @@ public:
     string(const char *val = "");
     string(size_t size = 1);
     string(const string &s);
+    string append(const char *val);
+    string append(const string &s);
     ~string()
     {
         if (str != NULL)
