@@ -86,6 +86,12 @@ public:
 
 class string : public chars
 {
+private:
+    friend std::ostream &operator<<(std::ostream &os, const string &obj);
+    friend std::istream &operator>>(std::istream &is, string &obj);
+    friend string operator+(const string &s1, const string &s2);
+    friend bool operator==(const string &s1, const string &s2);
+
 public:
     string(const char *val = "");
     string(size_t size = 1);
@@ -101,8 +107,3 @@ public:
     }
     string &operator=(const string &s);
 };
-
-std::ostream &operator<<(std::ostream &os, const string &obj);
-std::istream &operator>>(std::istream &is, string &obj);
-string operator+(const string &s1, const string &s2);
-bool operator==(const string &s1, const string &s2);
