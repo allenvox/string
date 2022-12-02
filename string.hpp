@@ -1,34 +1,18 @@
 #pragma once
 #include <iostream>
+#include <string.h>
 
 class abstract
 {
-protected:
-    char *str;
-
 public:
     virtual char *get() const = 0;
     virtual void set(char *val) = 0;
     virtual size_t length() const = 0;
 };
 
-class chars : public abstract
+class chars
 {
 public:
-    char *get() const
-    {
-        return str;
-    }
-    void set(char *val)
-    {
-        delete[] str;
-        str = new char[slen(val) + 1];
-        scpy(str, val);
-    }
-    size_t length() const
-    {
-        return slen(str);
-    }
     static char *scpy(char *dest, const char *src)
     {
         assert(dest != NULL && src != NULL);
@@ -84,18 +68,27 @@ public:
     }
 };
 
-class string : public chars
+class string : public abstract
 {
 private:
+    char *str;
     friend std::ostream &operator<<(std::ostream &os, const string &obj);
     friend std::istream &operator>>(std::istream &is, string &obj);
     friend string operator+(const string &s1, const string &s2);
     friend bool operator==(const string &s1, const string &s2);
 
 public:
-    string(const char *val = "");
+    string(const char *val = "") : str(strdup(val)) {}
     string(size_t size = 1);
-    string(const string &s);
+    string(const string &s) : str(strdup(s.get())) {}
+    char *get() const { return str; };
+    void set(char *val)
+    {
+        delete[] str;
+        str = new char[chars::slen(val) + 1];
+        chars::scpy(str, val);
+    }
+    size_t length() const { return chars::slen(str); }
     string append(const char *val);
     string append(const string &s);
     ~string()
