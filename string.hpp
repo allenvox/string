@@ -86,10 +86,18 @@ private:
     friend bool operator==(const string &s1, const string &s2);
 
 public:
-    string(const char *val = "") : str(chars::sdup(val)) {}
+    string()
+    {
+        string("");
+    }
+    string(const char *val) : str(chars::sdup(val)) {}
     string(size_t size = 1);
     string(const string &s) : str(chars::sdup(s.get())) {}
     char *get() const { return str; };
+    void set(const char *val)
+    {
+        set(chars::sdup(val));
+    }
     void set(char *val)
     {
         delete[] str;
