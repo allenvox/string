@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include <string.h>
 
 class abstract
 {
@@ -66,6 +65,15 @@ public:
         }
         return 0;
     }
+    static char *sdup(const char *val)
+    {
+        char *dest = new char[slen(val) + 1];
+        if (dest != NULL)
+        {
+            scpy(dest, val);
+        }
+        return dest;
+    }
 };
 
 class string : public abstract
@@ -78,9 +86,9 @@ private:
     friend bool operator==(const string &s1, const string &s2);
 
 public:
-    string(const char *val = "") : str(strdup(val)) {}
+    string(const char *val = "") : str(chars::sdup(val)) {}
     string(size_t size = 1);
-    string(const string &s) : str(strdup(s.get())) {}
+    string(const string &s) : str(chars::sdup(s.get())) {}
     char *get() const { return str; };
     void set(char *val)
     {
