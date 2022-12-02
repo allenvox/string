@@ -1,21 +1,6 @@
 #include "string.hpp"
 #include <iostream>
 
-string::string(const char *val)
-{
-    if (*val == 0 || val == nullptr)
-    {
-        str = new char[1];
-        str[0] = '\0';
-    }
-    else
-    {
-        str = new char[slen(val) + 1];
-        scpy(str, val);
-        str[slen(val)] = '\0';
-    }
-}
-
 string::string(size_t size)
 {
     try
@@ -36,27 +21,18 @@ string::string(size_t size)
             }
         }
     }
-    catch (const char *str)
+    catch (const char *e)
     {
-        std::cout << str << std::endl;
-    }
-}
-
-string::string(const string &s)
-{
-    str = new char[s.length()];
-    if (str != NULL)
-    {
-        scpy(str, s.get());
+        std::cout << e << std::endl;
     }
 }
 
 string string::append(const char *val)
 {
-    int l = slen(str) + slen(val);
+    int l = length() + chars::slen(val);
     char *buff = new char[l + 1];
-    scpy(buff, str);
-    scat(buff, val);
+    chars::scpy(buff, str);
+    chars::scat(buff, val);
     buff[l] = '\0';
     set(buff);
     delete[] buff;
