@@ -18,11 +18,11 @@ int main()
     s3 = "...";
     std::cout << "s3 = " << s3 << std::endl;
 
-    std::cout << "(s1 == s2) = " << std::noboolalpha << (s1 == s2) << std::boolalpha << "(not equal)" << std::endl;
+    std::cout << "(s1 == s2) = " << std::noboolalpha << (s1 == s2) << std::boolalpha << " (not equal)" << std::endl;
 
     std::cout << "s1 + s2 + s3 = " << s1 + " " + s2 + s3 << std::endl;
 
     s2.append(" is ");
-    std::cout << "s2.append('is').append('great!') = " << s2.append("great!") << std::endl;
+    std::cout << "s2.append(' is ').append('great!') = " << s2.append("great!") << std::endl;
     exit(0);
 }
