@@ -5,7 +5,7 @@ string::string(size_t size)
 {
     try
     {
-        if (size <= 0)
+        if (size == 0)
         {
             throw "Size of a string must be more than zero.";
         }
